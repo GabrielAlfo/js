@@ -1,62 +1,63 @@
-let opcion ="";
+let opcion = "";
 let precio = 0;
 let seguirComprando = false;
-let userInput =" ";
+let userInput = " ";
 
-opcion = prompt("¿Quieres consultar un teléfono o un servicio de reparación?");
-    if (opcion.toLowerCase() === "telefono") {
-        do {
-            userInput = prompt("Ingrese un teléfono:iPhone,Samsung,Huawei,Xiaomi,Motorola");
-                switch (userInput) {
-                case "iphone":
-                    precio = 1000;
-                    break;
-                case "samsung":
-                    precio = 800;
-                    break;
-                case "huawei":
-                    precio = 600;
-                    break;
-                case "xiaomi":
-                    precio = 500;
-                    break;
-                case "motorola":
-                    precio = 400;
-                    break;
-                case " ":
-                    precio = 0;
-                    break;
-                }
-                alert("El precio del teléfono " + userInput + " es: " + precio);
-            seguirComprando = confirm("Queres ver otro precio?");
-            } while (seguirComprando)
-    } else if (opcion.toLowerCase() === "reparacion") {
-        do {
-            userInput = prompt("Ingrese un servicio de reparación:Pantalla,Batería,Software,Camara,Conexion");
-                switch (userInput) {
-                case "pantalla":
-                    precio = 100;
-                    break;
-                case "bateria":
-                    precio = 50;
-                    break;
-                case "software":
-                    precio = 80;
-                    break;
-                case "camara":
-                    precio = 70;
-                    break;
-                case "conexion":
-                    precio = 60;
-                    break;
-                case " ":
-                    precio = 0;
-                    break;
-                }
-                alert("El precio de la reparación por " + userInput + " es: " + precio);
-                seguirComprando = confirm("Queres ver otro precio?");
-            } while (seguirComprando)
-    } else {
+const telefonos = ["iphone", "samsung", "huawei", "xiaomi", "motorola"];
+const preciosTelefonos = [1000, 800, 600, 500, 400];
+const reparaciones = ["pantalla", "bateria", "software", "camara", "conexion"];
+const preciosReparaciones = [100, 50, 80, 70, 60];
+
+function buscarTelefono(modelo) {
+  const index = telefonos.indexOf(modelo.toLowerCase());
+  if (index !== -1) {
+    return preciosTelefonos[index];
+  } else {
+    return 0;
+  }
+}
+
+function buscarReparacion(servicio) {
+  const index = reparaciones.indexOf(servicio.toLowerCase());
+  if (index !== -1) {
+    return preciosReparaciones[index];
+  } else {
+    return 0;
+  }
+}
+
+function mostrarMenu() {
+  opcion = prompt("¿Quieres consultar un teléfono o un servicio de reparación?");
+}
+
+function consultarTelefonos() {
+  do {
+    userInput = prompt("Ingrese un teléfono: iPhone, Samsung, Huawei, Xiaomi, Motorola");
+    precio = buscarTelefono(userInput);
+    alert("El precio del teléfono " + userInput + " es:  $ " + precio);
+    seguirComprando = confirm("¿Quieres ver otro precio?");
+  } while (seguirComprando);
+}
+
+function consultarReparaciones() {
+  do {
+    userInput = prompt("Ingrese un servicio de reparación: Pantalla, Batería, Software, Cámara, Conexión");
+    precio = buscarReparacion(userInput);
+    alert("El precio de la reparación por " + userInput + " es: $ " + precio);
+    seguirComprando = confirm("¿Quieres ver otro precio?");
+  } while (seguirComprando);
+}
+
+function main() {
+  mostrarMenu();
+  if (opcion.toLowerCase() === "telefono") {
+    consultarTelefonos();
+  } else if (opcion.toLowerCase() === "reparacion") {
+    consultarReparaciones();
+  } else {
     alert("Opción inválida. Por favor, ingresa 'telefono' o 'reparacion'.");
-    }
+    main()
+  }
+}
 
+main();
